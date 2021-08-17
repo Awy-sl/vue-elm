@@ -1,0 +1,5 @@
+/*
+ * getters
+ */
+
+export default {};
