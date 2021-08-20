@@ -45,6 +45,7 @@
         </div>
       </div>
     </div>
+    <div class="prompt">温馨提示：未注册过的账号，登录时将自动注册</div>
   </div>
 </template>
 
