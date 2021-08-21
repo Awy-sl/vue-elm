@@ -10,12 +10,12 @@ export const setLocalStorage = (key, val) => {
 };
 
 // getLocalStorage
-export const getLocalStorage = (key)=>{
-   let data = JSON.parse(localStorage.getItem(key)) || null;
-   return data
-}
+export const getLocalStorage = (key) => {
+  let data = JSON.parse(localStorage.getItem(key)) || null;
+  return data || null;
+};
 
 // removeLocalStorage
 export const removeLocalStorage = (key) => {
-   return localStorage.removeItem(key)
-}
+  return localStorage.removeItem(key);
+};

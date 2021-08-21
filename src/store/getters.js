@@ -2,4 +2,8 @@
  * getters
  */
 
-export default {};
+export default {
+  getRecords({ records }) {
+    return records;
+  },
+};
