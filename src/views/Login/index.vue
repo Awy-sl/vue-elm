@@ -30,42 +30,53 @@
       <div class="form-item number">
         <input
           type="number"
-          v-model="user.code"
+          v-model="user.captcha_code"
           name="code"
           placeholder="验证码"
         />
         <div class="code">
-          <span class="code-content">
-            1233
-          </span>
+          <img class="code-content" :src="code" />
           <span class="text">
             <p>看不清</p>
-            <p>换一张</p>
+            <p @click="handCode">换一张</p>
           </span>
         </div>
       </div>
     </div>
-    <div class="prompt">温馨提示：未注册过的账号，登录时将自动注册</div>
+    <div class="prompt">不知道为啥接口发送登录请求一直返回验证码超时</div>
+    <div class="prompt">所以无法实现登录注册功能</div>
+    <comp-button @click.native="loginClick" class="login-btn">
+      登录
+    </comp-button>
+    <router-link class="rest" to="/forget">重置密码？</router-link>
   </div>
 </template>
 
 <script>
 import GoBack from "components/GoBack";
 import TopBar from "components/TopBar";
+import CompButton from "components/Buttom";
+
+import { requestCode, requestLogin } from "@/api";
 
 export default {
   name: "Login",
   components: {
     GoBack,
     TopBar,
+    CompButton,
+  },
+  created() {
+    this.getCode();
   },
   data() {
     return {
       user: {
-        username: "张三",
-        password: "231",
-        code: "12323",
+        username: "",
+        password: "",
+        captcha_code: "",
       },
+      code: "",
       showPsd: false,
     };
   },
@@ -83,8 +94,28 @@ export default {
     },
   },
   methods: {
+    // 请求验证码
+    async getCode() {
+      const { code } = await requestCode();
+      this.code = code;
+    },
+    // 显示密码
     showBtn() {
       this.showPsd = !this.showPsd;
+    },
+    // 登录事件
+    async loginClick() {
+      // 验证表单
+      const { username, password, captcha_code } = this.user;
+      const result = await requestLogin(username, password, captcha_code);
+      if (result.status === 0) {
+        this.getCode();
+      }
+      console.log(result);
+    },
+    // 切换验证码
+    handCode() {
+      this.getCode();
     },
   },
 };
@@ -103,6 +134,12 @@ export default {
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+}
+.rest{
+  width: 100%;
+  text-align: right;
+  font-size: 16px;
+  color: #3190E8;
 }
 .form {
   border-top: 12px solid #ececec;
@@ -146,6 +183,14 @@ export default {
 }
 .anim-leave-active {
   right: 0;
+}
+.login-btn {
+  margin: 0px 12px 24px 12px;
+}
+.prompt {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: red;
 }
 .number {
   display: flex;

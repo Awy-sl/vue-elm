@@ -5,17 +5,20 @@
       <router-link to="/home" slot="left" class="link">ele.com</router-link>
       <router-link to="login" class="link" slot="right">登录|注册</router-link>
     </top-bar>
-    <!-- 当前城市 -->
-    <guess-city class="city" :guessCity="guess" />
-    <!-- 热门城市 -->
-    <hot-city :hotCity="hods" />
-    <!-- 全部城市 -->
-    <group-city :groupCity="groups" />
+    <scroll class="scroll" ref="scroll">
+      <!-- 当前城市 -->
+      <guess-city class="city" :guessCity="guess" />
+      <!-- 热门城市 -->
+      <hot-city :hotCity="hods" />
+      <!-- 全部城市 -->
+      <group-city :groupCity="groups" />
+    </scroll>
   </div>
 </template>
 
 <script>
 import TopBar from "components/TopBar";
+import Scroll from "components/Scroll";
 
 import GuessCity from "./children/GuessCity.vue";
 import HotCity from "./children/HotCity.vue";
@@ -30,6 +33,7 @@ export default {
     HotCity,
     GuessCity,
     GroupCity,
+    Scroll,
   },
   data() {
     return {
@@ -71,6 +75,9 @@ export default {
 .link {
   width: 100%;
   color: @font-color;
+}
+.scroll{
+  height: calc(100% - 45px);
 }
 .city {
   border-bottom: 10px solid #ececec;

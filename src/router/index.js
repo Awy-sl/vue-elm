@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 const Home = () => import(/* webpackChunkName: "home" */ "../views/Home");
-const Login = () => import(/* webpackChunkName: "login")home" */ "../views/Login");
+const Login = () =>import(/* webpackChunkName: "login")home" */ "../views/Login");
+const City = () =>import(/* webpackChunkName: "city")home" */ "../views/City");
 
 Vue.use(VueRouter);
 
@@ -14,9 +15,14 @@ const routes = [
   },
   {
     name: "login",
-    path:'/login',
+    path: "/login",
     component: Login,
-  }
+  },
+  {
+    name: "city",
+    path: "/city/:cityid",
+    component: City,
+  },
 ];
 
 const router = new VueRouter({

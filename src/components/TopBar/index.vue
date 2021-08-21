@@ -22,6 +22,8 @@ export default {
 @import "~@/assets/css/index.less";
 
 .top-bar {
+  position: relative;
+  z-index: 4;
   .fx-sb-center();
   height: 45px;
   color: @font-color;
