@@ -20,13 +20,19 @@ export const requestCityInfo = (id) =>
   });
 
 // 搜索地址
-export const requestSearchSite = (city_id,keyword) =>
+export const requestSearchSite = (city_id, keyword) =>
   request({
     url: "/v1/pois",
     params: {
       city_id,
-      keyword
-    }
+      keyword,
+    },
+  });
+
+// 根据经纬度定位
+export const requestPositioning = (geohash) =>
+  request({
+    url: `/v2/pois/${geohash}`,
   });
 
 // 登录
@@ -39,4 +45,16 @@ export const requestCode = () =>
   request({
     url: "/v1/captchas",
     method: "POST",
+  });
+
+// 获取食品分类列表
+export const requestFoodList = () =>
+  request({
+    url: "/v2/index_entry",
+  });
+
+// 获取商铺列表
+export const requestShops = (latitude, longitude) =>
+  request({
+    url: `/shopping/restaurants?latitude=${latitude}&longitude=${longitude}`,
   });

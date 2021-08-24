@@ -29,11 +29,8 @@ export default {
       },
     },
   },
-  created() {
-    this.$nextTick(() => {
-      //  创建滚动
-      this.crateScroll();
-    });
+  mounted() {
+    this.crateScroll();
   },
   methods: {
     //  创建滚动
@@ -42,7 +39,7 @@ export default {
         const { probeType, pullupLoad } = this;
         //   获取滚都dom
         const { wrapper } = this.$refs;
-        this.scroll = new Bscroll(wrapper, {
+        this.$scroll = new Bscroll(wrapper, {
           scrollY: true,
           click: true,
           observeDOM: true,
@@ -50,7 +47,7 @@ export default {
           pullupLoad,
         });
       } else {
-        this.scroll.refresh();
+        this.$scroll.refresh();
       }
     },
     //  滚都事件

@@ -1,9 +1,8 @@
 <template>
   <div class="home">
     <!-- 顶部导航栏 -->
-    <top-bar>
+    <top-bar :value="'login'">
       <router-link to="/home" slot="left" class="link">ele.com</router-link>
-      <router-link to="login" class="link" slot="right">登录|注册</router-link>
     </top-bar>
     <scroll class="scroll" ref="scroll">
       <!-- 当前城市 -->
@@ -67,16 +66,14 @@ export default {
 @import "~@/assets/css/index.less";
 
 .home {
-  width: 100vw;
-  height: 100vh;
-  background: @bg-color;
+  .main-box();
 }
 
 .link {
   width: 100%;
   color: @font-color;
 }
-.scroll{
+.scroll {
   height: calc(100% - 45px);
 }
 .city {

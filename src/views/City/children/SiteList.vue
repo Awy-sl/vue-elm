@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { SET_RECORDS } from "@/store/mutations-type";
-
 export default {
   name: "list",
   props: {
@@ -24,7 +22,7 @@ export default {
     // 跳转 /msite 路由
     goMsite(siteInfo) {
       const { geohash } = siteInfo;
-      this.$store.commit(SET_RECORDS, siteInfo);
+      this.$store.dispatch("setRecords", siteInfo);
       this.$router.push({
         path: "/msite",
         query: {

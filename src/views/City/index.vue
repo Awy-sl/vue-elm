@@ -1,10 +1,9 @@
 <template>
   <div class="city">
     <!-- 顶部导航栏 -->
-    <top-bar class="top-bar">
+    <top-bar class="top-bar" :value="'city'">
       <go-back slot="left" />
       <div slot="center" class="center">{{ cityInfo.name }}</div>
-      <router-link class="right" slot="right" to="/home">切换城市</router-link>
     </top-bar>
     <!--  -->
     <div class="search">
@@ -86,6 +85,7 @@ export default {
 @import "~assets/css/index.less";
 .city {
   .main-box();
+  z-index: 2;
 }
 
 .center {

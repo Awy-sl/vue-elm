@@ -7,7 +7,13 @@
       <slot name="center"></slot>
     </div>
     <div class="right">
-      <slot name="right"></slot>
+      <router-link v-if="value === 'city'" class="right" to="/home">
+        切换城市
+      </router-link>
+      <router-link v-else-if="value === 'login'" to="/login" class="right">
+        <span>登录|注册</span>
+        <span></span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -15,6 +21,14 @@
 <script>
 export default {
   name: "top-bar",
+  props: {
+    value: {
+      type: String,
+      default() {
+        return "";
+      },
+    },
+  },
 };
 </script>
 
@@ -38,7 +52,8 @@ export default {
   }
   .right {
     padding-right: 10px;
-    text-align: right;
+    text-align: center;
+    color: #fff;
   }
   .center {
     width: 160px;

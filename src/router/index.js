@@ -2,8 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 const Home = () => import(/* webpackChunkName: "home" */ "../views/Home");
-const Login = () =>import(/* webpackChunkName: "login")home" */ "../views/Login");
-const City = () =>import(/* webpackChunkName: "city")home" */ "../views/City");
+const Login = () =>
+  import(/* webpackChunkName: "login")home" */ "../views/Login");
+const City = () => import(/* webpackChunkName: "city")home" */ "../views/City");
+const Msite = () =>
+  import(/* webpackChunkName: "msite")home" */ "../views/Msite");
+const Search = () =>
+  import(/* webpackChunkName: "search")home" */ "../views/Search");
 
 Vue.use(VueRouter);
 
@@ -22,6 +27,16 @@ const routes = [
     name: "city",
     path: "/city/:cityid",
     component: City,
+  },
+  {
+    name: "msite",
+    path: "/msite",
+    component: Msite,
+  },
+  {
+    name: "search",
+    path: "/search/:geohash",
+    component: Search,
   },
 ];
 

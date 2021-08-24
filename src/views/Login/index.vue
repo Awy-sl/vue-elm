@@ -125,21 +125,19 @@ export default {
 @import "~assets/css/index.less";
 
 .login {
-  width: 100vw;
-  height: 100vh;
-  background: #f5f5f5;
-  overflow: hidden;
+  .main-box();
+  z-index: 2;
 }
 .center {
   font-size: 18px;
   font-weight: 700;
   text-align: center;
 }
-.rest{
+.rest {
   width: 100%;
   text-align: right;
   font-size: 16px;
-  color: #3190E8;
+  color: #3190e8;
 }
 .form {
   border-top: 12px solid #ececec;
