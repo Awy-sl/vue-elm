@@ -58,3 +58,27 @@ export const requestShops = (latitude, longitude) =>
   request({
     url: `/shopping/restaurants?latitude=${latitude}&longitude=${longitude}`,
   });
+// 获取商铺所有食品列表
+export const requestFoods = (restaurant_id) =>
+  request({
+    url: `/shopping/v2/menu?restaurant_id=${restaurant_id}`,
+  });
+// 获取店铺评价信息
+export const requestEvaluationInfo = (restaurant_id) =>
+  request({
+    url: `/ugc/v2/restaurants/${restaurant_id}/ratings/scores`,
+  });
+// 获取店铺评价数量
+export const requestCommentClassity = (restaurant_id) =>
+  request({
+    url: `/ugc/v2/restaurants/${restaurant_id}/ratings/tags`,
+  });
+// 获取用户评价列表
+export const requestUserComments = ({ id, offset, limit }) =>
+  request({
+    url: `/ugc/v2/restaurants/${id}/ratings`,
+    params: {
+      offset,
+      limit,
+    },
+  });

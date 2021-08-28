@@ -1,6 +1,6 @@
 <template>
   <div ref="wrapper">
-    <div class="content">
+    <div class="content" :style="sty">
       <slot></slot>
     </div>
   </div>
@@ -28,6 +28,12 @@ export default {
         return false;
       },
     },
+    sty: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   mounted() {
     this.crateScroll();
@@ -46,12 +52,22 @@ export default {
           probeType,
           pullupLoad,
         });
+        // 挂载scorll事件
+        this.scrollEvent();
       } else {
         this.$scroll.refresh();
       }
     },
-    //  滚都事件
-    scrollEvent() {},
+    // 创建 scorll事件
+    scrollEvent() {
+      this.$scroll.on("scroll", (position) => {
+        this.$emit("onScroll", position);
+      });
+    },
+    // 滚动跳跳转到顶部
+    scrollTo(x, y, time = 500) {
+      return this.$scroll.scrollTo(x, y, time);
+    },
   },
 };
 </script>

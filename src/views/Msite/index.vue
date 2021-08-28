@@ -25,6 +25,7 @@
 
 <script>
 import { requestPositioning, requestFoodList, requestShops } from "@/api";
+import { SET_SHOPINFO } from "@/store/mutations-type";
 
 import TopBar from "components/TopBar";
 import ShopList from "components/ShopList";
@@ -84,13 +85,13 @@ export default {
     // 跳转到店铺信息
     goShopDetail(item) {
       const { geohash } = this.$route.query;
-      console.log(item);
+      this.$store.commit(SET_SHOPINFO, item);
       this.$router.push({
         path: "/shop",
         query: {
           geohash,
+          id: item.id,
         },
-        params: {},
       });
     },
   },

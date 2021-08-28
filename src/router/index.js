@@ -9,6 +9,11 @@ const Msite = () =>
   import(/* webpackChunkName: "msite")home" */ "../views/Msite");
 const Search = () =>
   import(/* webpackChunkName: "search")home" */ "../views/Search");
+const Shop = () => import(/* webpackChunkName: "shop")home" */ "../views/Shop");
+const ShopDetail = () =>
+  import(
+    /* webpackChunkName: "shopDetail")home" */ "../views/Shop/children/ShopDetail"
+  );
 
 Vue.use(VueRouter);
 
@@ -37,6 +42,17 @@ const routes = [
     name: "search",
     path: "/search/:geohash",
     component: Search,
+  },
+  {
+    name: "shop",
+    path: "/shop",
+    component: Shop,
+    children: [
+      {
+        path: "shopDetail",
+        component: ShopDetail,
+      },
+    ],
   },
 ];
 
