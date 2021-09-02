@@ -12,7 +12,10 @@
         <p class="p">配送费￥{{ shopInfo.float_delivery_fee }}</p>
       </div>
       <div class="start"></div>
-      <div class="send">还差 ￥{{ shopInfo.shipping }}起送</div>
+      <div class="send show" v-if="pric * 1 >= shopInfo.shipping * 1">
+        去结算
+      </div>
+      <div v-else class="send">还差 ￥{{ shopInfo.shipping }}起送</div>
     </div>
   </div>
 </template>
@@ -108,8 +111,12 @@ export default {
     .send {
       .fx-center();
       padding: 8px;
+      width: 140px;
       height: 100%;
       background: #535356;
+    }
+    .show {
+      background: #4cd964;
     }
   }
 }

@@ -7,7 +7,6 @@ import {
   SET_SHOPINFO,
   SET_CART_LIST,
   CLEAR_CART_LIST,
-  REMOVE_CART_LIST,
 } from "./mutations-type";
 import { setLocalStorage, removeLocalStorage } from "@/utils/localStorage";
 
@@ -40,11 +39,16 @@ export default {
   },
   // 清空购物车列表
   [CLEAR_CART_LIST](state) {
-    state.cartList = {};
-    removeLocalStorage("cartList");
-  },
-  // 移出购物车
-  [REMOVE_CART_LIST](state, cartList) {
-    state.carList = cartList;
+    let newCartList = {};
+    console.log("清空");
+    for (const key in state.cartList) {
+      if (key == key * 1) {
+        console.log(key);
+        state.cartList[key] = [];
+      }
+    }
+    console.log(newCartList);
+    state.carList = newCartList;
+    setLocalStorage("carList", state.carList);
   },
 };

@@ -77,6 +77,7 @@ export default {
   },
   // 清空购物车 actions
   clearCarList({ commit }) {
-    commit(CLEAR_CART_LIST, {});
+    console.log("清空");
+    commit(CLEAR_CART_LIST);
   },
 };
