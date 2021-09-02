@@ -14,29 +14,23 @@
 </template>
 
 <script>
-import { requestCommentClassity } from "@/api";
-
 export default {
   name: "comment-classify",
+  props: {
+    classify: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
-      classify: [],
       selectIndex: 0,
     };
   },
-  created() {
-    this.getCommtClassity();
-  },
-  methods: {
-    // 获取评价分类
-    async getCommtClassity() {
-      const { id } = this.$route.query;
-      const res = await requestCommentClassity(id);
-      console.log(res);
-      this.classify = res;
-    },
-  },
   computed: {
+    // 背景颜色
     bgColor() {
       return (unsatisfied) => {
         return unsatisfied

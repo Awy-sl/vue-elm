@@ -38,6 +38,9 @@ export default {
   mounted() {
     this.crateScroll();
   },
+  updated() {
+    this.refresh();
+  },
   methods: {
     //  创建滚动
     crateScroll() {
@@ -54,6 +57,7 @@ export default {
         });
         // 挂载scorll事件
         this.scrollEvent();
+        this.refresh();
       } else {
         this.$scroll.refresh();
       }
@@ -67,6 +71,9 @@ export default {
     // 滚动跳跳转到顶部
     scrollTo(x, y, time = 500) {
       return this.$scroll.scrollTo(x, y, time);
+    },
+    refresh() {
+      this.$scroll.refresh();
     },
   },
 };

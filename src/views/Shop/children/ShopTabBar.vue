@@ -9,16 +9,24 @@
         <span :class="{ select: index === item.index }">{{ item.name }}</span>
       </div>
     </div>
-    <shop-food :foodList="foodList" v-show="index === 'shop'" />
+    <shop-food :foodList="foodList" v-if="index === 'shop'" />
     <shop-comment
+      class="shop-comment"
+      :commentList="commentList"
+      :classify="classify"
       :evaluationInfo="evaluationInfo"
-      v-show="index === 'comment'"
+      v-else-if="index === 'comment'"
     />
   </div>
 </template>
 
 <script>
-import { requestFoods, requestEvaluationInfo } from "@/api";
+import {
+  requestFoods,
+  requestEvaluationInfo,
+  requestCommentClassity,
+  requestUserComments,
+} from "@/api";
 import { shopInfoMixin } from "@/mixins";
 import ShopFood from "./ShopFood.vue";
 import ShopComment from "./ShopComment.vue";
@@ -49,11 +57,24 @@ export default {
       foodList: [],
       // 商铺评价信息
       evaluationInfo: {},
+      // 全部评价分类
+      classify: [],
+      // 用户评价列表
+      commentList: [],
+      // 评论页对象
+      page: {
+        id: this.$route.query.id,
+        offset: 0,
+        limit: 10,
+      },
     };
   },
+
   created() {
     this.getFoods();
     this.getEvaluationInfo();
+    this.getCommtClassity();
+    this.getCommentList();
   },
 
   methods: {
@@ -68,12 +89,22 @@ export default {
       const { id } = this.$route.query;
       const res = await requestEvaluationInfo(id);
       const { score } = this.shopInfo;
-
       this.evaluationInfo = {
         score,
         ...res,
       };
-      console.log(this.evaluationInfo);
+    },
+    // 获取评价分类
+    async getCommtClassity() {
+      const { id } = this.$route.query;
+      const res = await requestCommentClassity(id);
+      console.log(res);
+      this.classify = res;
+    },
+    // 获取评论列表
+    async getCommentList() {
+      const result = await requestUserComments(this.page);
+      this.commentList = result;
     },
   },
 };
@@ -104,5 +135,10 @@ export default {
 .select {
   color: #3190e8;
   border-bottom: 3px solid #3190e8;
+}
+.shop-comment {
+  position: relative;
+  height: calc(100% - 94px);
+  z-index: 0;
 }
 </style>

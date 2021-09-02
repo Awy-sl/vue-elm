@@ -4,34 +4,52 @@
       <div class="item">
         <img class="img" :src="foodImage(food.image_path)" />
         <div class="food-info">
-          <div class="food-title">
-            <h4>{{ food.name }}</h4>
-            <span
-              class="tag"
-              v-for="(t, key) in restAttributes(food.attributes)"
-              :key="key"
-              :style="{
-                border: `1px solid #${t.icon_color}`,
-                color: `#${t.icon_color}`,
-              }"
-            >
-              {{ t.icon_name }}
-            </span>
+          <div class="item-content " @click="goFoodDetlie('foodDetail', food)">
+            <div class="food-title">
+              <h4>{{ food.name }}</h4>
+              <span
+                class="tag"
+                v-for="(t, key) in restAttributes(food.attributes)"
+                :key="key"
+                :style="{
+                  border: `1px solid #${t.icon_color}`,
+                  color: `#${t.icon_color}`,
+                }"
+              >
+                {{ t.icon_name }}
+              </span>
+            </div>
+            <p class="brief">{{ food.description }}</p>
+            <p>月售{{ food.month_sales }}份 好评率{{ food.satisfy_rate }}%</p>
+            <span class="tag" :style="tagSty(food.activity)">{{
+              tagText(food.activity)
+            }}</span>
           </div>
-          <p class="brief">{{food.description}}</p>
-          <p>月售{{ food.month_sales }}份 好评率{{ food.satisfy_rate }}%</p>
-          <span class="tag" :style="tagSty(food.activity)">{{
-            tagText(food.activity)
-          }}</span>
           <div class="bottom">
             <div class="piec">
-              <span>￥</span><span>20</span><span>起</span>
+              <span>￥</span><span>{{ food.specfoods[0].price }}</span
+              ><span>起</span>
             </div>
             <div class="number">
-              <span class="reduce"> 一 </span>
-              1
-              <!-- <span class="select  plus">选规格</span> -->
-              <span class="add plus">+</span>
+              <span
+                class="iconfont reduce"
+                @click="reductionClick(food)"
+                v-show="foodNum(foodIndex, food.item_id)"
+              >
+                &#xe643;
+              </span>
+              <span class="num" v-show="foodNum(foodIndex, food.item_id)">
+                {{ foodNum(foodIndex, food.item_id) }}</span
+              >
+              <span
+                v-if="food.specfoods.length > 1"
+                class="select plus"
+                @click="showfoodDialog(food)"
+                >选规格
+              </span>
+              <span class="iconfont add plus" @click="addClick(food)" v-else>
+                &#xe60a;
+              </span>
             </div>
           </div>
         </div>
@@ -41,11 +59,23 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { foodContentMixin } from "@/mixins";
 import { resFood, resfoodImage } from "@/utils/format.js";
+
 export default {
   name: "right-food-item",
   mixins: [foodContentMixin],
+
+  props: {
+    foodIndex: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
+  },
+
   computed: {
     // 处理商品列表对象
     formatFood() {
@@ -93,6 +123,32 @@ export default {
         // eslint-disable-next-line
         return resfoodImage(img_url);
       };
+    },
+    ...mapGetters({
+      foodNum: "getCartListClassNum",
+    }),
+  },
+  methods: {
+    // 减少购买商品
+    reductionClick(food) {
+      this.$emit("reduction", this.foodIndex, food);
+    },
+    // 增加购买商品
+    addClick(food) {
+      this.$emit("addGoods", this.foodIndex, food);
+    },
+    // 跳转到食物详情
+    goFoodDetlie(path, food) {
+      if (!path) return;
+      const query = food;
+      this.$router.push({
+        path: `/shop/${path}`,
+        query,
+      });
+    },
+    // 显示商品选择页面
+    showfoodDialog(food) {
+      this.$emit("showfoodDialog", this.foodIndex, food);
     },
   },
 };
@@ -167,6 +223,9 @@ export default {
     .reduce {
       margin-right: 10px;
       color: #3190e8;
+    }
+    .iconfont {
+      font-size: 12px;
     }
     .add,
     .reduce {

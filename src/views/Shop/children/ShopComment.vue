@@ -1,19 +1,21 @@
 <template>
   <div class="food-comment">
-    <!-- 评分 -->
-    <comment-title :eavlInfo="restEvalInfo" />
-    <!-- 评价类型 -->
-    <comment-classify />
-    <!-- 用户评价列表 -->
-    <div class="comment-list">
-      <comment-item />
-      <comment-item />
-    </div>
+    <scroll class="scroll" ref="scroll">
+      <!-- 评分 -->
+      <comment-title :eavlInfo="restEvalInfo" />
+      <!-- 评价类型 -->
+      <comment-classify :classify="classify" />
+      <!-- 用户评价列表 -->
+      <div class="comment-list" v-for="item in commentList" :key="item._id">
+        <comment-item :comment="item" />
+      </div>
+      <div class="footer">到底了~╮(╯▽╰)╭</div>
+    </scroll>
   </div>
 </template>
 
 <script>
-import { requestUserComments } from "@/api";
+import Scroll from "components/Scroll";
 
 import CommentTitle from "./CommentTitle.vue";
 import CommentClassify from "./CommentClassify.vue";
@@ -25,6 +27,7 @@ export default {
     CommentTitle,
     CommentClassify,
     CommentItem,
+    Scroll,
   },
   props: {
     evaluationInfo: {
@@ -33,19 +36,18 @@ export default {
         return {};
       },
     },
-  },
-  data() {
-    return {
-      // 评论页对象
-      page: {
-        id: this.$route.query.id,
-        offset: 0,
-        limit: 10,
+    classify: {
+      type: Array,
+      default() {
+        return [];
       },
-    };
-  },
-  created() {
-    this.getCommentList();
+    },
+    commentList: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
   computed: {
     // 格式化店铺评价数据
@@ -64,10 +66,8 @@ export default {
     },
   },
   methods: {
-    // 获取评论列表
-    async getCommentList() {
-      const result = await requestUserComments(this.page);
-      console.log(result);
+    itemLoaded() {
+      this.$refs.scroll.refresh;
     },
   },
 };
@@ -83,5 +83,19 @@ export default {
 .comment-list {
   background: #fff;
   padding: 0px 10px;
+}
+.scroll {
+  height: 100%;
+}
+.footer {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px auto;
+  color: #ccc;
+  background: #fff;
+  line-height: 40px;
 }
 </style>

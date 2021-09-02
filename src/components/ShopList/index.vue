@@ -59,6 +59,8 @@
 <script>
 import { BASE_URL } from "@/constant";
 export default {
+  name: "shop-list",
+
   props: {
     shopList: {
       type: Array,

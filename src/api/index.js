@@ -82,3 +82,10 @@ export const requestUserComments = ({ id, offset, limit }) =>
       limit,
     },
   });
+// 购物车
+export const requestJoinCart = (params) =>
+  request({
+    method: "POST",
+    url: "/v1/carts/checkout",
+    data: params,
+  });

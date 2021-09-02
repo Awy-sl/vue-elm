@@ -5,6 +5,7 @@
 import { mapGetters } from "vuex";
 import GoBack from "components/GoBack";
 import TopBar from "components/TopBar";
+import { baseImg } from "@/utils/format.js";
 
 // 商品详情混入
 export const shopInfoMixin = {
@@ -29,6 +30,15 @@ export const foodContentMixin = {
       default() {
         return {};
       },
+    },
+  },
+};
+
+// 格式化图片地址
+export const foarmImgMinxin = {
+  computed: {
+    basImage() {
+      return baseImg;
     },
   },
 };

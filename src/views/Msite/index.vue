@@ -6,7 +6,7 @@
           &#xe604;
         </span>
       </router-link>
-      <div class="center" slot="center">
+      <div class="center" slot="center" @click="$router.push('/home')">
         {{ siteInfo.address }}
       </div>
     </top-bar>

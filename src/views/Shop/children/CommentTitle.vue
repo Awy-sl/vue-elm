@@ -64,7 +64,6 @@ export default {
         for (let i = 0; i < number; i++) {
           stars += "&#xe638;";
         }
-        console.log(stars);
         return stars;
       };
     },

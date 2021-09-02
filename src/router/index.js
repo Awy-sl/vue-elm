@@ -14,6 +14,10 @@ const ShopDetail = () =>
   import(
     /* webpackChunkName: "shopDetail")home" */ "../views/Shop/children/ShopDetail"
   );
+const FoodDetail = () =>
+  import(
+    /* webpackChunkName: "food_detail")home" */ "../views/Shop/children/FoodDetail"
+  );
 
 Vue.use(VueRouter);
 
@@ -51,6 +55,11 @@ const routes = [
       {
         path: "shopDetail",
         component: ShopDetail,
+      },
+      {
+        name: "food_detail",
+        path: "foodDetail",
+        component: FoodDetail,
       },
     ],
   },
